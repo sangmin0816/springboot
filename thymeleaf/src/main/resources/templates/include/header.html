@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link id="headerPath" th:data-contextPath="${#httpServletRequest.getContextPath()}"/>
+</head>
+
+<body>
+<header th:fragment="fragment-header">
+    <nav class="navbar-expand-lg navbar bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{${headerPath}/}">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{${headerPath}/}">학원 소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{${headerPath}/register/courseList}">수강신청</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            나의 학습
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{${headerPath}/course/courseList}">강의실</a></li>
+                            <li><a class="dropdown-item" th:href="@{${headerPath}/}">수강 관리</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            커뮤니티
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{${headerPath}/notice/noticeList}">공지사항</a></li>
+                            <li><a class="dropdown-item" th:href="@{${headerPath}/free/freeList}">자유게시판</a></li>
+                            <li><a class="dropdown-item" th:href="@{${headerPath}/}">이벤트</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <!--
+                <div class="d-flex">
+                    <div th:if="${sid}">
+                        <a th:href="@{${headerPath}/member/logout}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">로그아웃</a>
+                        <a th:href="@{${headerPath}/member/memberGet}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">회원 정보</a>
+                        <div th:if="${smembership == 'admin'}">
+                            <a th:href="@{${headerPath}/admin/adminBoard}" class="btn btn-outline-light"
+                               style="margin: 0px 5px;">관리자 페이지</a>
+                        </div>
+                        <div th:if="${smembership == 'teacher'}">
+                            <a th:href="@{${headerPath}/teacher/}" class="btn btn-outline-light"
+                               style="margin: 0px 5px;">선생님 페이지</a>
+                        </div>
+                    </div>
+                    <div th:unless="${not empty sid}">
+                        <a th:href="@{${headerPath}/member/login}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">로그인</a>
+                        <a th:href="@{${headerPath}/member/join}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">회원가입</a>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+
+</html>
