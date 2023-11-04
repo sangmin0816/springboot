@@ -10,28 +10,17 @@
 </head>
 <body>
 <div class="container">
-    <h1>메인페이지</h1>
+    <h1>공지사항 상세보기</h1>
 
-    <ul>
-        <li><a th:href="@{/board/noticeList}">공지사항 목록</a></li>
-    </ul>
-
-    <span>attrName: [[${attrName}]]</span>
-    <h4>Human from Model</h4>
-    <span th:text="${human.name}"/>
-    <span th:text="${human.age}"/>
-    <span th:if="${human.age<20}">미성년자</span>
-
-    <table class="table">
-        <tbody>
-        <tr th:each="human : ${humanList}">
-            <td th:text="${human.name}">default</td>
-            <td th:text="${human.age>20?human.age:'미성년자'}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <img th:src="@{/images/kkobugi_dance.gif}" alt="꼬부기 댄스">
+    <h2 th:text="${notice.title}"></h2>
+    <div class="d-flex">
+        <span th:text="${notice.author}"></span>
+        <span th:text="(isUpdate)?${#temporals.format(notice.createAt, 'yyyy-MM-dd')}:${#temporals.format(notice.UpdateAt, 'yyyy-MM-dd')}(수정됨)"></span>
+    </div>
+    <div th:text="${notice.content}"></div>
+    <a th:href="@{/board/noticeList}" class="btn btn-secondary">목록</a>
+    <a th:href="@{/board/noticeEdit(boardNo=${notice.boardNo})}" class="btn btn-primary">수정</a>
+    <a th:href="@{/board/noticeRemove(boardNo=${notice.boardNo})}" class="btn btn-danger">삭제</a>
 </div>
 </body>
 </html>

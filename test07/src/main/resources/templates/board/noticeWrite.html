@@ -10,28 +10,18 @@
 </head>
 <body>
 <div class="container">
-    <h1>메인페이지</h1>
-
-    <ul>
-        <li><a th:href="@{/board/noticeList}">공지사항 목록</a></li>
-    </ul>
-
-    <span>attrName: [[${attrName}]]</span>
-    <h4>Human from Model</h4>
-    <span th:text="${human.name}"/>
-    <span th:text="${human.age}"/>
-    <span th:if="${human.age<20}">미성년자</span>
-
-    <table class="table">
-        <tbody>
-        <tr th:each="human : ${humanList}">
-            <td th:text="${human.name}">default</td>
-            <td th:text="${human.age>20?human.age:'미성년자'}"></td>
-        </tr>
-        </tbody>
-    </table>
-
-    <img th:src="@{/images/kkobugi_dance.gif}" alt="꼬부기 댄스">
+    <h1>공지사항 글쓰기</h1>
+    <form th:action="@{/board/noticeWrite}" method="post">
+        <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" placeholder="제목" maxlength="200" required>
+        </div>
+        <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" rows="3" maxlength="2000"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">등록</button>
+    </form>
 </div>
 </body>
 </html>

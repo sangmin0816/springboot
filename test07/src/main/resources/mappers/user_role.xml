@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.chunjae.test07.persis.UserRoleMapper">
+<mapper namespace="com.chunjae.test07.mapper.UserRoleMapper">
     <resultMap id="UserRole" type="com.chunjae.test07.entity.UserRole">
         <result property="userId" column="user_id" />
         <result property="roleId" column="role_id" />
