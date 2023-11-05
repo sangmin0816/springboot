@@ -18,9 +18,9 @@ public interface BoardMapper {
 
     @Select("SELECT * FROM board WHERE boardNo=#{boardNo} AND authority!='REMOVE'")
     public Board boardGet(int boardNo);
-    @Insert("INSERT INTO board(boardType, title, content, author, hasFile, hasResponse, authority) VALUES(#{boardType}, #{title}, #{content}, #{author}, #{hasFile}, #{hasRespone}, #{authority})")
+    @Insert("INSERT INTO board(boardType, title, content, author, hasFile, hasResponse, authority) VALUES(#{boardType}, #{title}, #{content}, #{author}, #{hasFile}, #{hasResponse}, #{authority})")
     public int boardInsert(Board board);
-    @Update("UPDATE board SET title=#{title}, content=#{content}, hasFile=#{hasFile}, hasRespone=#{hasRespone}, authority=#{authority} WHERE boardNo=#{boardNo}")
+    @Update("UPDATE board SET title=#{title}, content=#{content}, hasFile=#{hasFile}, hasResponse=#{hasResponse}, authority=#{authority} WHERE boardNo=#{boardNo}")
     public int boardUpdate(Board board);
     @Update("UPDATE board SET visited=visited+1 WHERE boardNo=#{boardNo}")
     public int boardVisitUpdate(int boardNo);

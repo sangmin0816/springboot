@@ -14,7 +14,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class BoardVO extends Board {
+public class BoardVO {
+    private Board board;
     private List<FileData> files;
     private List<Response> responses;
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<header th:fragment="fragment-header">
+    <nav class="navbar-expand-lg navbar bg-primary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/}">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                    aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">학원 소개</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/}">수강신청</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            나의 학습
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/}">강의실</a></li>
+                            <li><a class="dropdown-item" th:href="@{/}">수강 관리</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            커뮤니티
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/board/noticeList}">공지사항</a></li>
+                            <li><a class="dropdown-item" th:href="@{${headerPath}/free/freeList}">자유게시판</a></li>
+                            <li><a class="dropdown-item" th:href="@{${headerPath}/}">이벤트</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="d-flex">
+                    <div th:if="${session.sid!=null}">
+                        <a th:href="@{/user/logout}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">로그아웃</a>
+                        <a th:href="@{/user/userDetail}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">회원 정보</a>
+                    </div>
+                    <div th:if="${session.sid==null}">
+                        <a th:href="@{/user/login}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">로그인</a>
+                        <a th:href="@{/user/join}" class="btn btn-outline-light"
+                           style="margin: 0px 5px;">회원가입</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+
+</html>

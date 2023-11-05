@@ -15,7 +15,7 @@ public interface BoardService {
     public List<Board> boardList();
     public List<Board> boardTypeList(String boardType);
     public BoardVO boardGet(int boardNo);
-    public Board boardRead(int boardNo);
+    public BoardVO boardRead(int boardNo);
     public int boardWrite(BoardVO board);
     public int boardEdit(BoardVO board);
     public int boardRemove(int boardNo);

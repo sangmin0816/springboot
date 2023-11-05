@@ -23,6 +23,8 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time' // string을 특정 date로 formatting
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'

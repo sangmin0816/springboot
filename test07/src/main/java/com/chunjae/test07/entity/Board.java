@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,8 +15,8 @@ public class Board {
     private String title;
     private String content;
     private String author;
-    private String createAt;
-    private String updateAt;
+    private Date createAt;
+    private Date updateAt;
     private boolean hasFile;
     private boolean hasResponse;
     private String authority = "ALL";

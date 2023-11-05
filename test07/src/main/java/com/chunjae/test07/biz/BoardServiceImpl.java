@@ -34,11 +34,12 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public BoardVO boardGet(int boardNo) {
-        BoardVO board = (BoardVO) boardMapper.boardGet(boardNo);
-        if(board.isHasFile()){
+        BoardVO board = new BoardVO();
+        board.setBoard(boardMapper.boardGet(boardNo));
+        if(board.getBoard().isHasFile()){
             board.setFiles(fileMapper.fileDataBoardList(boardNo));
         }
-        if(board.isHasResponse()){
+        if(board.getBoard().isHasResponse()){
             board.setResponses(responseMapper.responseBoardList(boardNo));
         }
 
@@ -46,14 +47,15 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public Board boardRead(int boardNo) {
+    public BoardVO boardRead(int boardNo) {
         boardMapper.boardVisitUpdate(boardNo);
 
-        BoardVO board = (BoardVO) boardMapper.boardGet(boardNo);
-        if(board.isHasFile()){
+        BoardVO board = new BoardVO();
+        board.setBoard(boardMapper.boardGet(boardNo));
+        if(board.getBoard().isHasFile()){
             board.setFiles(fileMapper.fileDataBoardList(boardNo));
         }
-        if(board.isHasResponse()){
+        if(board.getBoard().isHasResponse()){
             board.setResponses(responseMapper.responseBoardList(boardNo));
         }
 
@@ -63,8 +65,8 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     @Override
     public int boardWrite(BoardVO board) {
-        int returnNo = boardMapper.boardInsert(board);
-        if(board.isHasFile()){
+        int returnNo = boardMapper.boardInsert(board.getBoard());
+        if(board.getBoard().isHasFile()){
             int boardNo = boardMapper.boardGetLast();
             for(FileData f: board.getFiles()){
                 f.setBoardNo(boardNo);
@@ -78,10 +80,10 @@ public class BoardServiceImpl implements BoardService{
     @Transactional
     @Override
     public int boardEdit(BoardVO board) {
-        int returnNo = boardMapper.boardUpdate(board);
-        if(board.isHasFile()){
+        int returnNo = boardMapper.boardUpdate(board.getBoard());
+        if(board.getBoard().isHasFile()){
             if(board.getFiles().size()>0){
-                int boardNo = board.getBoardNo();
+                int boardNo = board.getBoard().getBoardNo();
                 for(FileData f: board.getFiles()){
                     f.setBoardNo(boardNo);
                     fileMapper.fileDataInsert(f);

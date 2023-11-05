@@ -31,14 +31,16 @@ public class BoardCtrl {
 
     @GetMapping("noticeGet")
     public String noticeGet(int boardNo, Model model){
-        Board notice = boardService.boardRead(boardNo);
-        model.addAttribute("notice");
+        Board notice = boardService.boardRead(boardNo).getBoard();
+        model.addAttribute("notice", notice);
 
-        if(!notice.getCreateAt().equals(notice.getUpdateAt())){
+        if(notice.getCreateAt().equals(notice.getUpdateAt())){
+            model.addAttribute("isUpdate", false);
+        } else{
             model.addAttribute("isUpdate", true);
         }
 
-        return "board/noticeGet";
+        return "board/noticeDetail";
     }
 
     @GetMapping("noticeWrite")
@@ -53,7 +55,8 @@ public class BoardCtrl {
 //        String author = (String) session.getAttribute("sid");
         String author = "admin";
 
-        BoardVO board = new BoardVO();
+        BoardVO boardvo = new BoardVO();
+        Board board = new Board();
         board.setBoardType("notice");
         board.setTitle(title);
         board.setContent(content);
@@ -61,18 +64,19 @@ public class BoardCtrl {
         board.setHasFile(false);
         board.setHasResponse(false);
         board.setAuthority("ALL");
+        boardvo.setBoard(board);
 
-        int success = boardService.boardWrite(board);
+        int success = boardService.boardWrite(boardvo);
         System.out.println(success);
 
-        return "redirect: noticeList";
+        return "redirect:noticeList";
     }
 
     @GetMapping("noticeEdit")
     public String noticeEdit(HttpServletRequest request, Model model){
         int boardNo = Integer.parseInt(request.getParameter("boardNo"));
-        Board board = boardService.boardGet(boardNo);
-        model.addAttribute("board", board);
+        Board board = boardService.boardGet(boardNo).getBoard();
+        model.addAttribute("notice", board);
         return "board/noticeEdit";
     }
 
@@ -83,12 +87,12 @@ public class BoardCtrl {
         String content = request.getParameter("content");
 
         BoardVO board = boardService.boardGet(boardNo);
-        board.setTitle(title);
-        board.setContent(content);
+        board.getBoard().setTitle(title);
+        board.getBoard().setContent(content);
 
         int success = boardService.boardEdit(board);
         System.out.println(success);
 
-        return "redirect: notcieGet?boardNo="+boardNo;
+        return "redirect:noticeGet?boardNo="+boardNo;
     }
 }

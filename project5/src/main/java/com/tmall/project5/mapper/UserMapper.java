@@ -11,6 +11,7 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE id NOT IN ('admin') ORDER BY regdate ASC LIMIT #{postStart}, #{postCount}")
     public List<User> userList(Page page);
     @Select("SELECT * FROM user WHERE id NOT IN ('admin') AND ${searchType} LIKE concat('%', #{searchKeyword}, '%') ORDER BY regdate ASC LIMIT #{postStart}, #{postCount}")
+
     public List<User> userSearchList(Page page);
 
     @Select("SELECT COUNT(*) FROM user WHERE id NOT IN ('admin') ORDER BY regdate ASC LIMIT #{postStart}, #{postCount}")
