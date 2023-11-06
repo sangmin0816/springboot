@@ -1,14 +1,19 @@
 package com.chunjae.test07.mapper;
 
 import com.chunjae.test07.entity.Board;
+import com.chunjae.test07.util.Page;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 @Mapper
 public interface BoardMapper {
-    @Select("SELECT * FROM board WHERE authority!='REMOVE'")
-    public List<Board> boardList();
+
+    @Select({"<script>","SELECT * FROM board WHERE",
+            "<if test='searchType != null and searchType != \"\"'> ${searchType} LIKE CONCAT('%', #{searchKeyword}, '%') AND</if>",
+            "authority!='REMOVE' AND boardType=#{boardType}"+
+            "ORDER BY createAt ASC LIMIT #{postStart}, #{postCount}","</script>"})
+    public List<Board> boardList(Page page);
     @Select("SELECT * FROM board WHERE authority!='REMOVE' AND boardType=#{boardType}")
     public List<Board> boardTypeList(String boardType);
     @Select("SELECT * FROM board WHERE author=#{author} AND authority!='REMOVE'")

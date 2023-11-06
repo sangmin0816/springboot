@@ -9,7 +9,7 @@ CREATE TABLE board(
     content VARCHAR(2000),                                                              -- 게시글 내용
     author VARCHAR(20),                                                                 -- 작성자 ID
     createAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,                              -- 작성일시
-    updateAT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,  -- 수정일시
+    updateAT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- 수정일시
     hasFile BOOLEAN DEFAULT FALSE,                                                      -- 파일의 존재 여부
     hasResponse BOOLEAN DEFAULT FALSE,                                                   -- 게시글 댓글 존재 여부
     authority VARCHAR(300) DEFAULT 'ALL',                                               -- 게시글 열람 권한
@@ -18,6 +18,7 @@ CREATE TABLE board(
 
 CREATE TABLE fileData(
     fileNo INT PRIMARY KEY AUTO_INCREMENT,
+    tableName VARCHAR(100),
     boardNo INT,
     originName VARCHAR(255),
     saveName VARCHAR(255),
@@ -36,3 +37,60 @@ CREATE TABLE response(
 	root INT,                                                                           -- 답글의 원본
 	depth INT                                                                           -- 답글 깊이
 );
+
+CREATE TABLE product(
+    productNo INT PRIMARY KEY AUTO_INCREMENT,
+    tableName VARCHAR(100) NOT NULL,
+    categoryNo INT,
+    title VARCHAR(200) NOT NULL,
+    content VARCHAR(2000) NOT NULL,
+    imageFile INT,              -- 썸네일 이미지
+    price INT NOT NULL,
+    createAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,                              -- 작성일시
+    updateAT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,  -- 수정일시
+    baseAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,    -- 정렬 기준 시간
+    isFree BOOLEAN DEFAULT FALSE,       -- 무료 여부
+    status VARCHAR(50) DEFAULT 'sale'   -- 판매중(sale), 예약(reserved), 완료(sold)
+);
+
+CREATE TABLE LIKES(
+    likeNo INT PRIMARY KEY AUTO_INCREMENT,
+    tableName VARCHAR(100) NOT NULL,
+    tableNo INT NOT NULL,
+    id VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE used(
+    usedNo INT PRIMARY KEY AUTO_INCREMENT,
+    productNo INT UNIQUE KEY,
+    userId VARCHAR(20) NOT NULL,
+    isTpay BOOLEAN DEFAULT FALSE,       -- 안전 거래 여부
+    addr1 VARCHAR(100),     -- 거래장소 주소
+    addr2 VARCHAR(200),     -- 거래장소 상세 주소
+    isDiscount BOOLEAN DEFAULT FALSE,       -- 가격 제안 가능 여부
+    visited INT DEFAULT 0                   -- 게시글 조회수
+);
+
+DELIMITER //
+CREATE TRIGGER update_content_trigger BEFORE UPDATE ON board
+    FOR EACH ROW
+BEGIN
+    IF NEW.content != OLD.content OR NEW.title != OLD.title THEN
+        SET NEW.updateAt = CURRENT_TIMESTAMP();
+    END IF;
+END;
+//
+DELIMITER ;
+
+
+/*
+DELIMITER //
+CREATE TRIGGER update_product_trigger BEFORE UPDATE ON product
+    FOR EACH ROW
+BEGIN
+    IF NEW.content != OLD.content OR NEW.title != OLD.title THEN
+        SET NEW.updateAt = CURRENT_TIMESTAMP();
+    END IF;
+END;
+//
+DELIMITER ;*/

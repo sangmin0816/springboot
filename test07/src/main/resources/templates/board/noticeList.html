@@ -10,8 +10,8 @@
 <div th:replace="/include/header.html :: fragment-header"></div>
 <div class="container contenter">
     <h1>공지사항 목록</h1>
-
-    <table class="table text-center" th:if="${not #lists.isEmpty(noticeList)}">
+    <div th:replace="/include/searchList.html :: fragment-search('/board/noticeList', 'title:제목,content:내용,author:작성자')"></div>
+    <table class="table text-center" th:if="${not #lists.isEmpty(boardList)}">
         <thead>
         <tr>
             <th>번호</th>
@@ -22,17 +22,25 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="notice, about : ${noticeList}">
-            <td th:text="${about.index + 1}"></td>
-            <td><a th:text="${notice.title}" th:href="@{/board/noticeGet(boardNo=${notice.boardNo})}" /></td>
-            <td th:text="${notice.author}"></td>
-            <td th:text="${#dates.format(notice.createAt, 'yyyy-MM-dd')}"></td>
-            <td th:text="${notice.visited}"></td>
+        <tr th:each="board, about : ${boardList}">
+            <td th:text="${about.count}"></td>
+            <td><a th:text="${board.title}" th:href="@{/board/noticeGet(boardNo=${board.boardNo})}" /></td>
+            <td th:text="${board.author}"></td>
+            <td th:text="${#dates.format(board.createAt, 'yyyy-MM-dd')}"></td>
+            <td th:text="${board.visited}"></td>
         </tr>
         </tbody>
     </table>
-    <div th:if="${#lists.isEmpty(noticeList)}" class="text-center">목록이 비어있습니다.</div>
+    <th:block th:if="${not #lists.isEmpty(boardList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/board/noticeList')"></div></th:block>
+    <div th:if="${#lists.isEmpty(boardList)}" class="text-center">목록이 비어있습니다.</div>
     <a th:href="@{/board/noticeWrite}" class="btn btn-primary">추가</a>
 </div>
 </body>
+
+<script th:inlin>
+    function test(msg){
+        console.log(msg)
+    }
+</script>
+
 </html>

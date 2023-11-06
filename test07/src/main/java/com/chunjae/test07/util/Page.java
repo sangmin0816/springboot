@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 @Data
 public class Page {
@@ -17,8 +18,15 @@ public class Page {
     private int pageBlockNum = 1;
     private int totalBlockNum = 1;
     private int totalPageCount = 1;
+
     private String searchType = "";
     private String searchKeyword = "";
+
+    private String boardType;
+    private String tableName;
+
+    private Date startdate;
+    private Date enddate = new Date();
 
     // 전체 페이지 개수 구하는 메소드
     public void makePostStart(int total) {
@@ -77,23 +85,21 @@ public class Page {
         int curPage = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
 
         page.setSearchType(type);
+        page.setSearchKeyword(keyword);
+        page.setCurPage(curPage);
 
         model.addAttribute("type", type);
         model.addAttribute("keyword", keyword);
         model.addAttribute("curPage", curPage);
-        page.setSearchKeyword(keyword);
-        page.setCurPage(curPage);
 
         return page;
     }
 
-    public static Page pageEnd(HttpServletRequest request, Model model, Page page, int total){
+    public static void pageEnd(HttpServletRequest request, Model model, Page page, int total){
         page.makeBlock(total);
         page.makeLastPageNum(total);
         page.makePostStart(total);
 
         model.addAttribute("page", page);
-
-        return page;
     }
 }

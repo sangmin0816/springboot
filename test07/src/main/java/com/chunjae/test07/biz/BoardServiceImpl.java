@@ -7,6 +7,7 @@ import com.chunjae.test07.entity.Response;
 import com.chunjae.test07.mapper.BoardMapper;
 import com.chunjae.test07.mapper.FileDataMapper;
 import com.chunjae.test07.mapper.ResponseMapper;
+import com.chunjae.test07.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +24,8 @@ public class BoardServiceImpl implements BoardService{
     private ResponseMapper responseMapper;
 
     @Override
-    public List<Board> boardList() {
-        return boardMapper.boardList();
+    public List<Board> boardList(Page page) {
+        return boardMapper.boardList(page);
     }
 
     @Override
@@ -37,7 +38,7 @@ public class BoardServiceImpl implements BoardService{
         BoardVO board = new BoardVO();
         board.setBoard(boardMapper.boardGet(boardNo));
         if(board.getBoard().isHasFile()){
-            board.setFiles(fileMapper.fileDataBoardList(boardNo));
+            board.setFiles(fileMapper.fileDataBoardList("board", boardNo));
         }
         if(board.getBoard().isHasResponse()){
             board.setResponses(responseMapper.responseBoardList(boardNo));
@@ -53,7 +54,7 @@ public class BoardServiceImpl implements BoardService{
         BoardVO board = new BoardVO();
         board.setBoard(boardMapper.boardGet(boardNo));
         if(board.getBoard().isHasFile()){
-            board.setFiles(fileMapper.fileDataBoardList(boardNo));
+            board.setFiles(fileMapper.fileDataBoardList("board", boardNo));
         }
         if(board.getBoard().isHasResponse()){
             board.setResponses(responseMapper.responseBoardList(boardNo));

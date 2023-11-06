@@ -4,6 +4,7 @@ import com.chunjae.test07.domain.BoardVO;
 import com.chunjae.test07.entity.Board;
 import com.chunjae.test07.entity.FileData;
 import com.chunjae.test07.entity.Response;
+import com.chunjae.test07.util.Page;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -12,10 +13,11 @@ import org.apache.ibatis.annotations.Update;
 import java.util.List;
 
 public interface BoardService {
-    public List<Board> boardList();
+    public List<Board> boardList(Page page);
     public List<Board> boardTypeList(String boardType);
     public BoardVO boardGet(int boardNo);
     public BoardVO boardRead(int boardNo);
+
     public int boardWrite(BoardVO board);
     public int boardEdit(BoardVO board);
     public int boardRemove(int boardNo);

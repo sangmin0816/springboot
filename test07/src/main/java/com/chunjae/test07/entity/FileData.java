@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FileData {
     private int fileNo;
+    private String tableName;
     private int boardNo;
     private String originName;
     private String saveName;
