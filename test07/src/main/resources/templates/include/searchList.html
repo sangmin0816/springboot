@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <div class="d-flex justify-content-end" th:fragment="fragment-search(pageLink, options)">
-    <form class="d-flex mb-3" role="search" method="get" style="max-width: 60%;" th:action="${pageLink}">
+    <form class="d-flex mb-3" role="search" method="post" style="max-width: 60%;" th:action="${pageLink}">
         <div class="input-group">
             <input class="form-control" type="search" placeholder="검색어 입력" aria-label="search" name="keyword" required th:value="${keyword}">
             <select class="form-select" id="type" name="type" required>

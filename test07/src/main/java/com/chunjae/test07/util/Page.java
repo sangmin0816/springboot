@@ -23,7 +23,6 @@ public class Page {
     private String searchKeyword = "";
 
     private String boardType;
-    private String tableName;
 
     private Date startdate;
     private Date enddate = new Date();

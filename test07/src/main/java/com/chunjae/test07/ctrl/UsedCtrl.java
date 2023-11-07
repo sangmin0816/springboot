@@ -1,11 +1,11 @@
 package com.chunjae.test07.ctrl;
 
-import com.chunjae.test07.biz.ProductService;
-import com.chunjae.test07.domain.ProductVO;
-import com.chunjae.test07.entity.Board;
+import com.chunjae.test07.biz.UsedService;
+import com.chunjae.test07.domain.UsedVO;
 import com.chunjae.test07.entity.FileData;
-import com.chunjae.test07.entity.Product;
 import com.chunjae.test07.entity.Used;
+import com.chunjae.test07.entity.Used;
+import com.chunjae.test07.entity.UsedProduct;
 import com.chunjae.test07.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,48 +16,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
-@RequestMapping("/product/**")
-public class ProductCtrl {
+@RequestMapping("/used/**")
+public class UsedCtrl {
     @Autowired
-    private ProductService productService;
+    private UsedService usedService;
 
-    @GetMapping("productList")
-    public String productList(HttpServletRequest request, Model model){
-        String tableName = request.getParameter("table");
+    @GetMapping("usedList")
+    public String usedList(HttpServletRequest request, Model model){
         Page page = Page.pageStart(request, model);
-        List<ProductVO> productList = productService.productList(page);
-        int total = productList.size();
+        List<UsedVO> usedList = usedService.usedList(page);
+        int total = usedList.size();
         Page.pageEnd(request, model, page, total);
 
-        model.addAttribute("productList", productList);
-        return "product/productList";
+        model.addAttribute("usedList", usedList);
+        return "used/usedList";
     }
 
-    @GetMapping("productDetail")
-    public String productDetail(int productNo, Model model){
-        ProductVO vo = productService.productDetail(productNo);
+    @GetMapping("usedDetail")
+    public String usedDetail(int usedNo, Model model){
+        UsedVO vo = usedService.usedDetail(usedNo);
 
-        model.addAttribute("product", vo.getProduct());
-        model.addAttribute("used", vo.getUsed());
+        model.addAttribute("used", vo.getUsedProduct());
         model.addAttribute("thumbnail", vo.getThumbnail());
         model.addAttribute("images", vo.getFiles());
-        return "product/productDetail";
+        return "used/usedDetail";
     }
 
-    @GetMapping("productWrite")
-    public String productWrite(){
-        return "product/productWrite";
+    @GetMapping("usedWrite")
+    public String usedWrite(){
+        return "used/usedWrite";
     }
 
-    @PostMapping("productWrite")
-    public String productWrite(MultipartHttpServletRequest files, HttpServletRequest req){
-        String realFolder = req.getRealPath("/resources/upload");
+    @PostMapping("usedWrite")
+    public String usedWrite(MultipartHttpServletRequest files, HttpServletRequest req){
+        String realFolder = req.getServletContext().getRealPath("/resources/upload");
 
         Enumeration<String> e = files.getParameterNames();
         Map map = new HashMap();
@@ -67,17 +66,15 @@ public class ProductCtrl {
             map.put(name, value);
         }
 
-        Product p = new Product();
-        p.setTableName("used");
-        p.setCategoryNo(Integer.parseInt((String)map.get("categoryNo")));
-        p.setTitle((String) map.get("title"));
-        p.setContent((String) map.get("content"));
-        p.setPrice(Integer.parseInt((String)map.get("price")));
-        p.setFree(Boolean.parseBoolean((String)map.get("isFree")));
-
-        Used u = new Used();
+        UsedProduct u = new UsedProduct();
+        u.setCategoryNo(Integer.parseInt((String)map.get("categoryNo")));
         u.setUserId("author");
-        u.setDiscount(Boolean.parseBoolean((String)map.get("isDiscount")));
+        u.setTitle((String) map.get("title"));
+        u.setContent((String) map.get("content"));
+        u.setPrice(Integer.parseInt((String)map.get("price")));
+        u.setFree(Boolean.parseBoolean((String)map.get("free")));
+        u.setTpay(Boolean.parseBoolean((String)map.get("discount")));
+        u.setDiscount(Boolean.parseBoolean((String)map.get("tpay")));
         u.setAddr1((String) map.get("addr1"));
         u.setAddr2((String) map.get("addr2"));
 
@@ -91,9 +88,7 @@ public class ProductCtrl {
 
         List<MultipartFile> fileList = files.getFiles("uploadFiles");
         List<FileData> fileDataList = new ArrayList<>();
-        FileData thumbnail = new FileData();
 
-        int i = 0;
         for(MultipartFile multipartFile : fileList){
             String originalName = multipartFile.getOriginalFilename();
             if(!originalName.isEmpty()){
@@ -104,14 +99,10 @@ public class ProductCtrl {
                 f.setSaveName(saveName);
                 f.setFileType(multipartFile.getContentType());
                 f.setSavePath(today);
-                if(i==0){
-                    thumbnail = f;
-                } else{
-                    fileDataList.add(f);
-                }
+
+                fileDataList.add(f);
 
                 File savefile = new File(saveFolder, saveName);
-                i++;
 
                 try{
                     multipartFile.transferTo(savefile);
@@ -121,14 +112,12 @@ public class ProductCtrl {
             }
         }
 
-        ProductVO pv = new ProductVO();
-        pv.setProduct(p);
-        pv.setUsed(u);
-        pv.setThumbnail(thumbnail);
-        pv.setFiles(fileDataList);
+        UsedVO uv = new UsedVO();
+        uv.setUsedProduct(u);
+        uv.setFiles(fileDataList);
 
-        productService.productWrite(pv);
+        usedService.usedWrite(uv);
 
-        return "redirect:productList";
+        return "redirect:usedList";
     }
 }

@@ -13,7 +13,7 @@ public interface FileDataMapper {
     @Select("SELECT * FROM fileData WHERE fileNo=#{fileNo}")
     public FileData fileDataGet(int fileNo);
 
-    @Insert("INSERT INTO fileData (tableName, boardNo, originName, saveName, savePath, fileType) VALUES (#{tableName}, #{boardNo}, #{originName}, #{saveName}, #{savePath}, #{fileType}, #{authority})")
+    @Insert("INSERT INTO fileData (tableName, boardNo, originName, saveName, savePath, fileType, authority) VALUES (#{tableName}, #{boardNo}, #{originName}, #{saveName}, #{savePath}, #{fileType}, #{authority})")
     public int fileDataInsert(FileData fileData);
     @Select("SELECT fileNo FROM fileData ORDER BY fileNo DESC LIMIT 1")
     public int fileDataGetLast();

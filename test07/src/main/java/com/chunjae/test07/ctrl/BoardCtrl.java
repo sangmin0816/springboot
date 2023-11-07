@@ -35,6 +35,18 @@ public class BoardCtrl {
         return "board/noticeList";
     }
 
+    @PostMapping("noticeList")
+    public String noticeListPro(HttpServletRequest request, Model model){
+        Page page = Page.pageStart(request, model);
+        page.setBoardType("notice");
+        List<Board> boardList = boardService.boardList(page);
+        int total = boardList.size();
+        Page.pageEnd(request, model, page, total);
+
+        model.addAttribute("boardList", boardList);
+        return "board/noticeList";
+    }
+
     @GetMapping("noticeGet")
     public String noticeGet(int boardNo, Model model){
         Board notice = boardService.boardRead(boardNo).getBoard();

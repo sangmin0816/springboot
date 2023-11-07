@@ -23,7 +23,8 @@ CREATE TABLE fileData(
     originName VARCHAR(255),
     saveName VARCHAR(255),
     savePath VARCHAR(255),
-    fileType VARCHAR(100)
+    fileType VARCHAR(100),
+    authority VARCHAR(300) DEFAULT 'ALL',                                               -- 게시글 열람 권한
 );
 
 CREATE TABLE response(
@@ -70,6 +71,26 @@ CREATE TABLE used(
     isDiscount BOOLEAN DEFAULT FALSE,       -- 가격 제안 가능 여부
     visited INT DEFAULT 0                   -- 게시글 조회수
 );
+
+CREATE TABLE usedProduct(
+    usedNo INT PRIMARY KEY AUTO_INCREMENT,
+    categoryNo INT,                                             -- 카테고리 번호
+    userId VARCHAR(20) NOT NULL,                                -- 판매자 ID
+    title VARCHAR(200) NOT NULL,                                -- 이름
+    content VARCHAR(2000) NOT NULL,                             -- 설명
+    price INT NOT NULL,                                         -- 가격
+    free BOOLEAN NOT NULL DEFAULT FALSE,                               -- 무료 여부
+    tpay BOOLEAN NOT NULL DEFAULT FALSE,                               -- 안전 결제 여부
+    discount BOOLEAN NOT NULL DEFAULT FALSE,                           -- 가격 제안 가능 여부
+    addr1 VARCHAR(100),                                         -- 거래장소 주소
+    addr2 VARCHAR(200),                                         -- 거래장소 상세 주소
+    createAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,      -- 작성일시
+    updateAT TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,      -- 수정일시
+    baseAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,        -- 정렬 기준 시간
+    status VARCHAR(50) DEFAULT 'sale',                          -- 판매중(sale), 예약(reserved), 완료(sold)
+    visited INT DEFAULT 0                                       -- 게시글 조회수
+);
+
 
 DELIMITER //
 CREATE TRIGGER update_content_trigger BEFORE UPDATE ON board

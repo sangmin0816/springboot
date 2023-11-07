@@ -10,7 +10,7 @@
 <div th:replace="/include/header.html :: fragment-header"></div>
 <div class="container contenter">
     <h1>중고거래 목록</h1>
-    <div th:replace="/include/searchList.html :: fragment-search('/product/secondhandList', 'title:제목,content:내용,author:작성자')"></div>
+    <div th:replace="/include/searchList.html :: fragment-search('/used/usedList', 'title:제목,content:내용,author:작성자')"></div>
     <table class="table text-center" th:if="${not #lists.isEmpty(boardList)}">
         <thead>
         <tr>
@@ -22,16 +22,16 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="product, about : ${productList}">
+        <tr th:each="used, about : ${usedList}">
             <td th:text="${about.count}"></td>
-            <td><a th:text="${product.title}" th:href="@{/product/noticeGet(productNo=${product.productNo})}" /></td>
-            <td th:text="${#dates.format(product.baseAt, 'yyyy-MM-dd')}"></td>
+            <td><a th:text="${used.title}" th:href="@{/used/usedDetail(usedNo=${used.usedNo})}" /></td>
+            <td th:text="${#dates.format(used.baseAt, 'yyyy-MM-dd')}"></td>
         </tr>
         </tbody>
     </table>
-    <th:block th:if="${not #lists.isEmpty(productList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/product/secondhandList')"></div></th:block>
-    <div th:if="${#lists.isEmpty(productList)}" class="text-center">목록이 비어있습니다.</div>
-    <a th:href="@{/product/secondhandWrite}" class="btn btn-primary">추가</a>
+    <th:block th:if="${not #lists.isEmpty(usedList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/used/usedList')"></div></th:block>
+    <div th:if="${#lists.isEmpty(usedList)}" class="text-center">목록이 비어있습니다.</div>
+    <a th:href="@{/used/usedWrite}" class="btn btn-primary">추가</a>
 </div>
 </body>
 </html>

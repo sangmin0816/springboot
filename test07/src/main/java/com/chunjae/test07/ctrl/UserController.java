@@ -23,22 +23,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String home(Model model){
-        Human human = new Human();
-        human.setName("김일");
-        human.setAge(11);
-        model.addAttribute("human", human);
-
-        List<Human> humanList = new ArrayList<>();
-        humanList.add(human);
-        humanList.add(new Human("김이", 22));
-
-        model.addAttribute("attrName", "😒");
-        model.addAttribute("humanList", humanList);
-        return "index";
-    }
-
     @GetMapping(value = {"login"})
     public ModelAndView getLoginPage() {
         ModelAndView modelAndView = new ModelAndView();
