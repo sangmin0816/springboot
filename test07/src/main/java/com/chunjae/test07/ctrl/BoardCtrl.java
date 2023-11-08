@@ -3,6 +3,7 @@ package com.chunjae.test07.ctrl;
 import com.chunjae.test07.biz.BoardService;
 import com.chunjae.test07.domain.BoardVO;
 import com.chunjae.test07.entity.Board;
+import com.chunjae.test07.util.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,9 +24,26 @@ public class BoardCtrl {
     private HttpSession session;
 
     @GetMapping("noticeList")
-    public String noticeList(Model model){
-        List<Board> noticeList = boardService.boardTypeList("notice");
-        model.addAttribute("noticeList", noticeList);
+    public String noticeList(HttpServletRequest request, Model model){
+        Page page = Page.pageStart(request, model);
+        page.setBoardType("notice");
+        List<Board> boardList = boardService.boardList(page);
+        int total = boardList.size();
+        Page.pageEnd(request, model, page, total);
+
+        model.addAttribute("boardList", boardList);
+        return "board/noticeList";
+    }
+
+    @PostMapping("noticeList")
+    public String noticeListPro(HttpServletRequest request, Model model){
+        Page page = Page.pageStart(request, model);
+        page.setBoardType("notice");
+        List<Board> boardList = boardService.boardList(page);
+        int total = boardList.size();
+        Page.pageEnd(request, model, page, total);
+
+        model.addAttribute("boardList", boardList);
         return "board/noticeList";
     }
 
