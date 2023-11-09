@@ -39,6 +39,17 @@ public class UsedCtrl {
         return "used/usedList";
     }
 
+    @PostMapping("usedList")
+    public String usedListPost(HttpServletRequest request, Model model){
+        Page page = Page.pageStart(request, model);
+        List<UsedVO> usedList = usedService.usedList(page);
+        int total = usedList.size();
+        Page.pageEnd(request, model, page, total);
+
+        model.addAttribute("usedList", usedList);
+        return "used/usedList";
+    }
+
     @GetMapping("usedDetail")
     public String usedDetail(int usedNo, Model model){
         UsedVO vo = usedService.usedDetail(usedNo);

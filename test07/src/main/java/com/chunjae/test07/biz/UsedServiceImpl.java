@@ -22,16 +22,19 @@ public class UsedServiceImpl implements UsedService{
 
     @Override
     public List<UsedVO> usedList(Page page) {
+        // List<String> strList = IntStream.range(1, 10).mapToObj(i -> "Name" + i).collect(Collectors.toList());
         List<UsedVO> usedVO = new ArrayList<>();
         List<UsedProduct> ulist = mapper.usedProductList(page);
         for(UsedProduct u: ulist){
             UsedVO temp = new UsedVO();
             temp.setUsedProduct(u);
             List<FileData> flist = fileMapper.fileDataBoardList("usedProduct", u.getUsedNo());
+            temp.setFiles(flist);
+
             if(flist.size()>0){
                 temp.setThumbnail(flist.get(0));
-
             }
+
 
             usedVO.add(temp);
         }

@@ -91,6 +91,27 @@ CREATE TABLE usedProduct(
     visited INT DEFAULT 0                                       -- 게시글 조회수
 );
 
+use tsellpa;
+CREATE TABLE chatRoom (
+    roomNo INT PRIMARY KEY AUTO_INCREMENT,
+    userId VARCHAR(20) NOT NULL,
+    usedNo INT NOT NULL,
+    status VARCHAR(50) DEFAULT 'ON',
+    -- userId와 usedNo를 묶어서 UNIQUE 제약 설정
+    UNIQUE (userId, usedNo)
+);
+
+CREATE TABLE chatMessage(
+    chatNo INT PRIMARY KEY AUTO_INCREMENT,      -- 채팅 번호
+    type VARCHAR(20) NOT NULL,                  -- 채팅 타입: ENTER, TALK, LEAVE, NOTICE
+    roomNo INT NOT NULL,                        -- 채팅방 번호
+    sender VARCHAR(20) NOT NULL,                -- 송신자
+    message VARCHAR(2000) NOT NULL,             -- 채팅 메시지
+    status VARCHAR(50) DEFAULT 'UNREAD',        -- 읽음 여부
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP    -- 채팅 발송 시간
+);
+
+
 
 DELIMITER //
 CREATE TRIGGER update_content_trigger BEFORE UPDATE ON board
@@ -115,3 +136,13 @@ BEGIN
 END;
 //
 DELIMITER ;*/
+
+
+-- 강사님 테이블
+CREATE TABLE book(
+  seq BIGINT PRIMARY KEY AUTO_INCREMENT,
+  title VARCHAR(255) NOT NULL,
+  author VARCHAR(255) NOT NULL,
+  publisher VARCHAR(255) NOT NULL,
+  publishAt DATE
+);

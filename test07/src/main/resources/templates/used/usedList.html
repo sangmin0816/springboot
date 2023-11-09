@@ -11,24 +11,18 @@
 <div class="container contenter">
     <h1>중고거래 목록</h1>
     <div th:replace="/include/searchList.html :: fragment-search('/used/usedList', 'title:제목,content:내용,author:작성자')"></div>
-    <table class="table text-center" th:if="${not #lists.isEmpty(boardList)}">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>등록일</th>
-            <th>조회수</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="used, about : ${usedList}">
-            <td th:text="${about.count}"></td>
-            <td><a th:text="${used.title}" th:href="@{/used/usedDetail(usedNo=${used.usedNo})}" /></td>
-            <td th:text="${#dates.format(used.baseAt, 'yyyy-MM-dd')}"></td>
-        </tr>
-        </tbody>
-    </table>
+
+    <div class="card-list" th:each="used, about : ${usedList}">
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${used.usedProduct.title}" />
+                <p class="card-text" th:text="${used.usedProduct.price}+'원'"/>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+
     <th:block th:if="${not #lists.isEmpty(usedList)}"><div th:replace="/include/pagination.html :: fragment-pagination('/used/usedList')"></div></th:block>
     <div th:if="${#lists.isEmpty(usedList)}" class="text-center">목록이 비어있습니다.</div>
     <a th:href="@{/used/usedWrite}" class="btn btn-primary">추가</a>

@@ -1,6 +1,9 @@
 server:
   port: 8086
 spring:
+  messages:
+    basename: messages
+    encoding: UTF-8
   profile:
     active: local
   thymeleaf:
