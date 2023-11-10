@@ -81,7 +81,7 @@
 
 <script th:inline="javascript">
     let ws;
-    let username = "admin";
+    let username = "kim1";
     if (username === "null") {
         username = "guest";
     }
@@ -105,7 +105,7 @@
         });
     }
 
-    function makeChat(type, room, username, message){
+    function makeChat(chatNo, type, room, username, message){
         var currentTime = new Date();
         var options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
         var time = new Intl.DateTimeFormat('ko-KR', options).format(currentTime);
@@ -190,7 +190,6 @@
                 url: "/chat/readChat",
                 data: {message: response.data, user: username},
                 success: function (data) {
-                    console.log(data);
                 }
             });
 
@@ -243,20 +242,18 @@
 
     $("#chat-send").on("click", function() {
         let roomNo = $("#chat-roomNo").val();
-        let msg = $("#chat-input").val();
+        let sendmsg = $("#chat-input").val();
 
-        if(msg===""){
+        if(sendmsg===""){
             return false;
         } else {
-            var jsonstr = makeChat(0, "TALK", roomNo, username, msg);
+            var jsonstr = makeChat(0, "TALK", roomNo, username, sendmsg);
             $.ajax({
                 type: "POST",
                 url: "/chat/insertChat",
                 data: {message: jsonstr},
                 success: function (response) {
-                    console.log(response);
-                    send(makeChat(response.chatNo, "TALK", roomNo, username, msg));
-                    chatNo = response.chatNo;
+                    send(makeChat(response.chatNo, "TALK", roomNo, username, sendmsg));
                 }
             });
         }

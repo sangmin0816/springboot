@@ -146,3 +146,14 @@ CREATE TABLE book(
   publisher VARCHAR(255) NOT NULL,
   publishAt DATE
 );
+
+CREATE TABLE user(
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    userId VARCHAR(50) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    pw VARCHAR(300) NOT NULL,
+    tel VARCHAR(20),
+    email VARCHAR(200),
+    crateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
+    UNIQUE KEY userIdEmail(userId, email)
+);

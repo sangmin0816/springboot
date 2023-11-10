@@ -16,9 +16,9 @@ import java.util.*;
 @Service
 public class ChatServiceImpl implements ChatService {
     @Autowired
-    private ChatRoomMapper roomMapper;
+    ChatRoomMapper roomMapper;
     @Autowired
-    private ChatMessageMapper chatMapper;
+    ChatMessageMapper chatMapper;
 
     @Override
     public List<ChatRoom> chatRoomProductList(int usedNo) {

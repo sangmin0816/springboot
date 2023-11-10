@@ -4,6 +4,8 @@ import com.chunjae.test07.biz.ChatService;
 import com.chunjae.test07.domain.ChatMessage;
 import com.chunjae.test07.domain.ChatRoom;
 import com.chunjae.test07.biz.ChatServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,11 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/chat/")
 public class ChatRoomCtrl {
+    private static final ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private ChatService service;
 
-    @GetMapping("home")
+    @GetMapping("chat")
     public String loadHome(Model model, HttpServletRequest request){
         int usedNo = Integer.parseInt(request.getParameter("usedNo"));
         List<ChatRoom> chatRooms = service.chatRoomProductList(usedNo);
@@ -30,11 +33,18 @@ public class ChatRoomCtrl {
         return "/chat/chat";
     }
 
+    @GetMapping("chat2")
+    public String loadHome2(Model model, HttpServletRequest request){
+        int usedNo = Integer.parseInt(request.getParameter("usedNo"));
+        List<ChatRoom> chatRooms = service.chatRoomProductList(usedNo);
+
+        model.addAttribute("chatRooms", chatRooms);
+        return "/chat/chat2";
+    }
+
     @PostMapping("createRoom")
     @ResponseBody
-    public ChatRoom createRoom(HttpServletRequest request){
-        String userId = request.getParameter("userId");
-        int usedNo = Integer.parseInt(request.getParameter("usedNo"));
+    public ChatRoom createRoom(@RequestParam String userId, @RequestParam int usedNo){
 
         return service.chatRoomInsert(userId, usedNo);
     }
@@ -44,6 +54,7 @@ public class ChatRoomCtrl {
     public List<ChatMessage> getRoom(HttpServletRequest request){
         int roomNo = Integer.parseInt(request.getParameter("roomNo"));
         String sender = request.getParameter("userId");
+        service.chatMessageReadUpdates(roomNo, sender);
 
         return service.chatMessageList(roomNo, sender);
     }
@@ -72,5 +83,23 @@ public class ChatRoomCtrl {
         }
 
         return "Something went wrong";
+    }
+
+    @PostMapping("insertChat")
+    @ResponseBody
+    public ChatMessage insertChat(@RequestParam String message) throws JsonProcessingException {
+        ChatMessage chat = mapper.readValue(message, ChatMessage.class);
+
+        return service.chatMessageInsert(chat);
+    }
+
+    @PostMapping("readChat")
+    @ResponseBody
+    public String readChat(@RequestParam String message, @RequestParam String user) throws JsonProcessingException {
+        ChatMessage chat = mapper.readValue(message, ChatMessage.class);
+        System.out.println(chat);
+        service.chatMessageReadUpdate(chat.getChatNo(), user);
+
+        return "readChat Completed";
     }
 }

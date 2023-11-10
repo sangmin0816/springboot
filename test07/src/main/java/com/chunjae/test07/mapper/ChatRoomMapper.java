@@ -23,7 +23,7 @@ public interface ChatRoomMapper {
     public int chatRoomGetUnique(String userId, int usedNo);
 
     @Insert("INSERT INTO chatRoom(userId, usedNo) VALUES(#{userId}, #{usedNo})")
-    public int chatRoomInsert(String userId, int usedNo);
+    public void chatRoomInsert(String userId, int usedNo);
     @Update("UPDATE chatRoom SET status='BLOCK' WHERE roomNo=#{roomNo}")
     public int chatRoomBlockUpdate(int roomNo);
 

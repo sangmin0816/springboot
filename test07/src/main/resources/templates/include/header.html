@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/}">학원 소개</a>
+                        <a class="nav-link" th:href="@{/chat/chat(usedNo=0)}">채팅</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/used/usedList}">중고거래</a>
@@ -25,8 +25,8 @@
                             나의 학습
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" th:href="@{/}">강의실</a></li>
-                            <li><a class="dropdown-item" th:href="@{/}">수강 관리</a></li>
+                            <li><a class="nav-link" th:href="@{/chat/chat(usedNo=0)}">채팅</a></li>
+                            <li><a class="nav-link" th:href="@{/chat/chat2(usedNo=0)}">채팅2</a></li>
                         </ul>
                     </li>
 

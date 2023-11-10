@@ -5,7 +5,9 @@ import com.chunjae.test07.biz.ChatServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.chunjae.test07.domain.ChatMessage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.websocket.*;
 import javax.websocket.Session;
@@ -15,16 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-@Controller
+@Component
 @ServerEndpoint(value = "/socket")
 public class ChatCtrl {
     private static final ObjectMapper mapper = new ObjectMapper();
-    @Autowired
-    private static final ChatService service = new ChatServiceImpl();
-    private static final List<Session> sessionList = new ArrayList<Session>();
 
-    public ChatCtrl(){
-    }
+    @Autowired
+    private ChatService service;
+    private static final List<Session> sessionList = new ArrayList<Session>();
 
     @OnOpen  // socket 연결 시
     public void onOpen(Session session) {
@@ -38,21 +38,19 @@ public class ChatCtrl {
         int roomNo = Integer.parseInt(requestParameter.get("roomNo").get(0));
 
         ChatMessage chat = mapper.readValue(message, ChatMessage.class);
-        ChatMessage chatReturn = service.chatMessageInsert(chat);
+        System.out.println(chat);
+        sendRoomMessage(message, roomNo, chat);
 
-        if(chat.getSender().equals("admin")){
-            // 관리자는 공지인 경우에만 메시지 전송
-            if(chat.getType().equals(ChatMessage.MessageType.NOTICE)){
-                sendAllSessionToMessage(message);
-            }
-        } else if(chatReturn!=null) {
+        /*ChatMessage chatReturn = service.chatMessageInsert(chat);
+
+        if(chatReturn!=null) {
             sendRoomMessage(message, roomNo, chatReturn);
         } else {
             chat.setType(ChatMessage.MessageType.NOTICE);
             chat.setSender("admin");
             chat.setMessage("대화 상대에게 차단되어 메시지를 보낼 수 없어요.");
             sendRoomMessage(message, roomNo, chatReturn);
-        }
+        }*/
     }
 
     @OnError
@@ -81,8 +79,6 @@ public class ChatCtrl {
                 Map<String, List<String>> requetParameter = s.getRequestParameterMap();
                 int sroomNo = Integer.parseInt(requetParameter.get("roomNo").get(0));
                 if(sroomNo == roomNo){
-                    String userId = requetParameter.get("userId").get(0);
-                    service.chatMessageReadUpdate(chat.getChatNo(),userId);
                     s.getBasicRemote().sendText(msg);
                 }
             }

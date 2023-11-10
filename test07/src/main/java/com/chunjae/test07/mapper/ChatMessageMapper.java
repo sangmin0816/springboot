@@ -12,7 +12,7 @@ public interface ChatMessageMapper {
 
     @Select("SELECT COUNT(*) FROM chatMessage WHERE roomNo=#{roomNo} AND status='UNREAD'")
     public int chatMessageUnread(int roomNo);
-    @Select("SELECT * FROM chatMessage ORDER BY chatNo LIMIT 1")
+    @Select("SELECT * FROM chatMessage ORDER BY chatNo DESC LIMIT 1")
     public ChatMessage chatMessageGetLast();
 
     @Insert("INSERT INTO chatMessage(type, roomNo, sender, message) VALUES(#{type}, #{roomNo}, #{sender}, #{message})")
