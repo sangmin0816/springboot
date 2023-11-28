@@ -35,7 +35,7 @@ dependencies {
 
     // querydsl 라이브러리
     implementation "com.querydsl:querydsl-jpa"
-    implementation "com.querydsl:querydsl-apt"
+    implementation "com.querydsl:querydsl-apt" // apt(annotation processing tool)
     implementation "com.querydsl:querydsl-core"
     implementation "com.querydsl:querydsl-sql"
 
@@ -48,6 +48,9 @@ dependencies {
     implementation "io.springfox:springfox-boot-starter:3.0.0"
     implementation "io.springfox:springfox-swagger-ui:3.0.0"
     implementation "net.coobird:thumbnailator:0.4.16"
+
+    // 타임리프로 LocalDateTime format 을 temporals 로 맞추기 위해 필요
+    implementation "org.thymeleaf.extras:thymeleaf-extras-java8time3"
 
     compileOnly("org.projectlombok:lombok", "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
     developmentOnly "org.springframework.boot:spring-boot-devtools"
@@ -70,7 +73,6 @@ dependencies {
 }
 
 tasks.named("bootBuildImage") {
-    dependsOn("clean")
     builder = "paketobuildpacks/builder-jammy-base:latest"
 }
 
@@ -78,6 +80,9 @@ tasks.named("test") {
     useJUnitPlatform()
 }
 
+// 프로젝트의 소스 코드 및 리소스 디렉토리 구성
+// 개발 시 작성하는 java 파일의 위치 (src/main/java)와 Q도메인이 저장되는 위치(build/generated)를 명시
+// 기존 파일과 Q도메인이 gradle 빌드 시 자동 컴파일 되게 함
 sourceSets {
     main.java.srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
 }

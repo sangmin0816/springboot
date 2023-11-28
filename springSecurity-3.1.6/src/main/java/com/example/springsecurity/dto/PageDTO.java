@@ -1,4 +1,4 @@
-package com.springdata.dto;
+package com.example.springsecurity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:replace="/include/fragment :: head" ></th:block>
+    <title>Spring Data</title>
+</head>
+<body>
+<th:block th:replace="/include/fragment :: header" ></th:block>
+<div class="container">
+    <h1>BoardList</h1>
+    <div th:replace="/include/fragment :: search('board/boardList', 'author:작성자,title:제목,content:내용')"></div>
+    <!-- include하는 main화면에서 options를 넘겨줄 때 하나의 옵션을 ,(반점)으로 구분한다. -->
+    <!-- 이때 콜론 왼쪽에는 DB 테이블의 컬럼 이름이, 오른쪽에는 사용자에게 표시될 이름을 입력한다. -->
+    <table class="table text-center" th:if="${not #lists.isEmpty(boardList)}">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>등록일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="board, about : ${boardList}">
+            <td th:text="${about.count}"></td>
+            <td><a th:text="${board.author}" th:href="@{/board/boardGet(bno=${board.bno})}"></a></td>
+            <td th:text="${board.title}"></td>
+            <td th:text="${board.visited}"></td>
+            <td th:text="${#temporals.format(board.createAt, 'yyyy-MM-dd')}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <th:block th:if="${not #lists.isEmpty(boardList)}"><div th:replace="/include/fragment :: pagination('board/boardList')"></div></th:block>
+    <div th:if="${#lists.isEmpty(boardList)}" class="text-center">목록이 비어있습니다.</div>
+</div>
+</body>
+</html>

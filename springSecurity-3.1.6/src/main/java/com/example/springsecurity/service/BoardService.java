@@ -1,10 +1,8 @@
-package com.springdata.service;
+package com.example.springsecurity.service;
 
-import com.springdata.dto.BoardDTO;
-import com.springdata.dto.PageDTO;
-import com.springdata.entity.Board;
-
-import java.util.List;
+import com.example.springsecurity.dto.BoardDTO;
+import com.example.springsecurity.dto.PageDTO;
+import com.example.springsecurity.entity.Board;
 
 public interface BoardService {
     Long boardAdd(BoardDTO boardDTO);

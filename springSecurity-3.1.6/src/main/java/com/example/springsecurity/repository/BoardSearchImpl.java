@@ -1,11 +1,10 @@
-package com.springdata.repository;
+package com.example.springsecurity.repository;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQuery;
-import com.springdata.dto.PageDTO;
-import com.springdata.entity.Board;
-// 처음에는 빨간 줄이 뜰 수 있다.
-import com.springdata.entity.QBoard;
+import com.example.springsecurity.dto.PageDTO;
+import com.example.springsecurity.entity.Board;
+import com.example.springsecurity.entity.QBoard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

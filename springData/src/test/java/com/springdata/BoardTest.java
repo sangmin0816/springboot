@@ -46,7 +46,8 @@ public class BoardTest {
         pageDTO.setKeyword("7");
         Pageable pageable = pageDTO.getPageable();
         Page<Board> result = boardRepository.searchPage(pageable, pageDTO);
-        pageDTO.build(result, BoardDTO.class);
+        pageDTO.build(result);
+        pageDTO.entity2dto(result, BoardDTO.class);
         List<BoardDTO> boardList = pageDTO.getListDTO();
         boardList.forEach(b-> System.out.println("SEARCH RESULT: "+b));
     }

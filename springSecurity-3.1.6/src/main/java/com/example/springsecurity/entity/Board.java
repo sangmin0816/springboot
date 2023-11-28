@@ -1,8 +1,8 @@
-package com.springdata.entity;
+package com.example.springsecurity.entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Getter
