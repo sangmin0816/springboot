@@ -16,7 +16,8 @@ import java.util.Optional;
 @Transactional
 @Service
 public class BoardServiceImpl implements BoardService{
-    private ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private ModelMapper modelMapper;
     @Autowired
     private BoardRepository boardRepo;
 
