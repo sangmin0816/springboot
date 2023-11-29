@@ -23,21 +23,28 @@ repositories {
 }
 
 dependencies {
-    implementation 'javax.servlet:jstl'
-    implementation 'org.springframework.security:spring-security-taglibs'
-    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
-
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.3.1'
+
+    // BCrypt 사용 위해 의존성 추가
+    implementation 'org.springframework.security:spring-security-core'
+    // Model Mapper
+    implementation 'org.modelmapper:modelmapper:3.1.0'
+    
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-    annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor('org.projectlombok:lombok', 'javax.persistence:javax.persistence-api', 'javax.annotation:javax.annotation-api')
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
-    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+tasks.named('bootBuildImage') {
+    builder = 'paketobuildpacks/builder-jammy-base:latest'
 }
 
 tasks.named('test') {
