@@ -47,6 +47,7 @@ dependencies {
 
     // modelMapper: DTO 와 엔티티 간 변환 처리해주는 라이브러리
     implementation "org.modelmapper:modelmapper:3.2.0"
+    testImplementation 'org.projectlombok:lombok:1.18.26'
 
     compileOnly("org.projectlombok:lombok", "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta") // 롬복 외에도 querydsl 어노테이션 추가
 
@@ -62,6 +63,9 @@ dependencies {
 
 
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    testAnnotationProcessor "org.projectlombok:lombok"
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
@@ -74,9 +78,17 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// 프로젝트의 소스 코드 및 리소스 디렉토리 구성
-// 개발 시 작성하는 java 파일의 위치 (src/main/java)와 Q도메인이 저장되는 위치(build/generated)를 명시
-// 기존 파일과 Q도메인이 gradle 빌드 시 자동 컴파일 되게 함
+
+def querydslDir = "src/main/generated"
+
+tasks.withType(JavaCompile).configureEach {
+    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
 sourceSets {
-    main.java.srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+    main.java.srcDirs += [ querydslDir ]
+}
+
+clean {
+    delete file(querydslDir)
 }

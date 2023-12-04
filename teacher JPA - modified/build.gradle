@@ -60,7 +60,7 @@ dependencies {
     implementation "io.springfox:springfox-boot-starter:3.0.0"
     implementation "io.springfox:springfox-swagger-ui:3.0.0"
 
-    // dlalwl dydfiddmf wnfdu wkrdms dlalwl todtjd
+    // 이미지 용량을 줄여 작은 이미지 생성
     implementation "net.coobird:thumbnailator:0.4.16"
 
 }

@@ -5066,3 +5066,23 @@ java.sql.SQLSyntaxErrorException: (conn=3438) You have an error in your SQL synt
 2023-11-29 12:50:14.849 INFO  [restartedMain] [o.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8085"]
 2023-11-29 12:50:14.859 INFO  [restartedMain] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8085 (http) with context path ''
 2023-11-29 12:50:14.866 INFO  [restartedMain] [com.team45.TmallApplication] - Started TmallApplication in 1.541 seconds (JVM running for 2.063)
+2023-11-29 12:50:42.570 INFO  [background-preinit] [o.h.validator.internal.util.Version] - HV000001: Hibernate Validator 6.2.5.Final
+2023-11-29 12:50:42.570 INFO  [restartedMain] [com.team45.TmallApplication] - Starting TmallApplication using Java 17.0.7 on stu-08-019 with PID 12948 (D:\sangmin0816\springboot\project5\build\classes\java\main started by db400tea in D:\sangmin0816\springboot\project5)
+2023-11-29 12:50:42.571 INFO  [restartedMain] [com.team45.TmallApplication] - No active profile set, falling back to 1 default profile: "default"
+2023-11-29 12:50:42.598 INFO  [restartedMain] [o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-11-29 12:50:42.599 INFO  [restartedMain] [o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor] - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-11-29 12:50:43.221 INFO  [restartedMain] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8080 (http)
+2023-11-29 12:50:43.229 INFO  [restartedMain] [o.apache.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8080"]
+2023-11-29 12:50:43.230 INFO  [restartedMain] [org.apache.catalina.core.StandardService] - Starting service [Tomcat]
+2023-11-29 12:50:43.230 INFO  [restartedMain] [org.apache.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.82]
+2023-11-29 12:50:43.278 INFO  [restartedMain] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2023-11-29 12:50:43.278 INFO  [restartedMain] [o.s.b.w.s.c.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 679 ms
+2023-11-29 12:50:43.705 INFO  [restartedMain] [o.s.b.d.a.OptionalLiveReloadServer] - LiveReload server is running on port 35729
+2023-11-29 12:50:43.719 INFO  [restartedMain] [o.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8080"]
+2023-11-29 12:50:43.728 INFO  [restartedMain] [o.s.b.w.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8080 (http) with context path ''
+2023-11-29 12:50:43.735 INFO  [restartedMain] [com.team45.TmallApplication] - Started TmallApplication in 1.354 seconds (JVM running for 1.716)
+2023-11-29 12:50:52.635 INFO  [http-nio-8080-exec-1] [o.a.c.c.C.[Tomcat].[localhost].[/]] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-11-29 12:50:52.635 INFO  [http-nio-8080-exec-1] [o.s.web.servlet.DispatcherServlet] - Initializing Servlet 'dispatcherServlet'
+2023-11-29 12:50:52.636 INFO  [http-nio-8080-exec-1] [o.s.web.servlet.DispatcherServlet] - Completed initialization in 1 ms
+2023-11-29 12:50:52.685 INFO  [http-nio-8080-exec-1] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2023-11-29 12:50:52.741 INFO  [http-nio-8080-exec-1] [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.

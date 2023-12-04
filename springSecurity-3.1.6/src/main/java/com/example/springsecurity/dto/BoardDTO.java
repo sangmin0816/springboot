@@ -1,25 +1,23 @@
 package com.example.springsecurity.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import com.example.springsecurity.entity.BoardFile;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class BoardDTO {
-    private Long bno;
+    private Integer bno;
+    private String teacher;
     private String title;
-    private String content;
-    private String author;
-    @Builder.Default
-    private int visited = 0;
-    @Builder.Default
+    private String bpw;
+    private Integer maxStudent;
+    private String bgColor;
+    private Integer bgImage;
     private String status = "ACTIVE";
+    private String layout = "GRID";
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
+
+    private BoardFile file;             // 배경 이미지
 }
