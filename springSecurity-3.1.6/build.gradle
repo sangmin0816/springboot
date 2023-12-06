@@ -4,7 +4,6 @@ buildscript {
     }
 }
 
-
 plugins {
     id 'java'
     id 'war'
@@ -47,7 +46,7 @@ dependencies {
 
     // modelMapper: DTO 와 엔티티 간 변환 처리해주는 라이브러리
     implementation "org.modelmapper:modelmapper:3.2.0"
-    testImplementation 'org.projectlombok:lombok:1.18.26'
+
 
     compileOnly("org.projectlombok:lombok", "com.querydsl:querydsl-apt:${queryDslVersion}:jakarta") // 롬복 외에도 querydsl 어노테이션 추가
 
@@ -66,6 +65,7 @@ dependencies {
 
     testAnnotationProcessor "org.projectlombok:lombok"
 
+    testImplementation 'org.projectlombok:lombok:1.18.26'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
